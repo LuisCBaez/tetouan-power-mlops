@@ -1,15 +1,51 @@
 # Python-generated files
 __pycache__/
-*.py[oc]
+*.py[cod]
+*$py.class
 build/
 dist/
 wheels/
-*.egg-info
+*.egg-info/
+pip-wheel-metadata/
 
 # Virtual environments
-.venv
+.venv/
+venv/
+.env/
+*.env
+*.venv
 
+# Data (never commit raw data)
 data/
-.env
-*.pyc
+*.csv
+
+# Jupyter
 .ipynb_checkpoints/
+
+# MLflow
+mlruns/
+mlflow.db
+
+# Test coverage
+test-reports/
+htmlcov/
+.coverage
+
+# Databricks
+.databricks/
+.dbx/
+databricks/
+workspace/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Logs
+logs/
+*.log
+debug.log
+
+# Custom
+**/*.whl
