@@ -1,13 +1,74 @@
 [project]
-name = "power-consumption-mlops"
+name = "tetouan-power-mlops"
 version = "0.1.0"
-description = "Add your description here"
+description = "Tetouan power consumption forecasting - MLOps pipeline"
 readme = "README.md"
 requires-python = ">=3.12"
+authors = [
+    {name = "Luis C Baez"}
+]
+
 dependencies = [
     "ipykernel>=7.2.0",
     "jupyter>=1.1.1",
+    "lightgbm>=4.6.0",
+    "loguru>=0.7.3",
     "matplotlib>=3.10.8",
+    "mlflow>=1.27.0",
+    "numpy>=2.4.2",
     "pandas>=3.0.1",
     "pyarrow>=23.0.1",
+    "pydantic>=2.12.5",
+    "pyyaml>=6.0.3",
+    "scikit-learn>=1.8.0",
 ]
+
+[project.optional-dependencies]
+dev = [
+    "databricks-connect>=18.0.0",
+    "ipykernel>=7.2.0",
+    "pre-commit>=4.5.1",
+    "pytest>=9.0.2",
+    "ruff>=0.8",
+]
+test = [
+    "delta-spark==3.3.0",
+    "pre-commit>=4.5.1",
+    "pydantic-settings>=2.13.1",
+    "pyspark==3.5.5",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.15.5",
+]
+
+
+[build-system]
+requires = ["setuptools>=72.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["tetouan_power*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = [
+    "ci_exclude: Tests excluded from CI/CD pipeline"
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "D"]
+ignore = ["E501", "D100", "D104"]
+# E=pycodestyle, F=pyflakes, I=isort, UP=pyupgrade, B=bugbear, D=pydocstyle
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+indent-style = "space"
+docstring-code-format = true

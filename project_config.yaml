@@ -1,0 +1,28 @@
+prd:
+  catalog_name: mlops_prd
+  schema_name: tetouan_power
+acc:
+  catalog_name: mlops_acc
+  schema_name: tetouan_power
+dev:
+  catalog_name: mlops_dev
+  schema_name: tetouan_power
+parameters:
+  learning_rate: 0.01
+  n_estimators: 500
+  max_depth: 6
+num_features:
+  - temperature
+  - humidity
+  - wind_speed
+  - general_diffuse_flows
+  - diffuse_flows
+  - hour
+  - day_of_week
+  - month
+  - is_weekend
+cat_features: []
+target: zone1_consumption
+split:
+  train_end: "2017-10-01"  # train = before this (Jan–Sep), YYYY-MM-DD
+  val_end: "2017-12-01"  # val = train_end to val_end (Oct–Nov), YYYY-MM-DD

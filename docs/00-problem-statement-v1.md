@@ -1,8 +1,8 @@
 # 00 — Problem Statement (Version 1)
 
 ## Status
-Version: v1 (Post-EDA Validated)  
-Last Updated: March 4, 2026  
+Version: v1 (Post-EDA Validated)
+Last Updated: March 4, 2026
 Owner: LuisCa
 
 ---
@@ -135,7 +135,7 @@ Weather/environment features include:
 - `general diffuse flows`
 - `diffuse flows`
 
-**Important naming note:**  
+**Important naming note:**
 Keep `general diffuse flows` and `diffuse flows` distinct when normalizing names (do not map both to the same target name).
 
 
@@ -153,6 +153,6 @@ Keep `general diffuse flows` and `diffuse flows` distinct when normalizing names
 
 ## 9. Next Step
 
-1) Write `docs/01-eda-findings.md` (summary + confirmed schema + any quirks)  
-2) Proceed: minimal data loader + schema checks + baseline model objective (t+10min)  
+1) Write `docs/01-eda-findings.md` (summary + confirmed schema + any quirks)
+2) Proceed: minimal data loader + schema checks + baseline model objective (t+10min)
 3) Convert naming normalization into a repeatable data contract step (bronze→silver)
