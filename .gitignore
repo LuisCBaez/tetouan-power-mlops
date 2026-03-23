@@ -19,6 +19,9 @@ venv/
 data/
 *.csv
 
+# Exception: test data IS committed (needed for CI)
+!tests/test_data/*.csv
+
 # Jupyter
 .ipynb_checkpoints/
 

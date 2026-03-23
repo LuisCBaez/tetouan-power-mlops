@@ -1,8 +1,8 @@
 # 00 — Problem Statement (Version 0)
 
 ## Status
-Version: v0 (Pre-EDA Hypothesis)  
-Last Updated: March 3, 2026  
+Version: v0 (Pre-EDA Hypothesis)
+Last Updated: March 3, 2026
 Owner: LuisCa
 
 ---

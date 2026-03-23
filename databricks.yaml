@@ -1,0 +1,9 @@
+bundle:
+  name: tetouan-power-mlops
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-f7f73b77-309f.cloud.databricks.com
