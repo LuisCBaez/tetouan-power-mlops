@@ -1,6 +1,12 @@
 bundle:
   name: tetouan-power-mlops
 
+artifacts:
+  default:
+    type: whl
+    build: uv build
+    path: .
+
 targets:
   dev:
     mode: development
