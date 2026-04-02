@@ -22,6 +22,9 @@ data/
 # Exception: test data IS committed (needed for CI)
 !tests/test_data/*.csv
 
+# Exception: test catalog CSVs for model tests (Phase 2+)
+!tests/catalog/*.csv
+
 # Jupyter
 .ipynb_checkpoints/
 
