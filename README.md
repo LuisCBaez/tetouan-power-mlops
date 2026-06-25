@@ -36,8 +36,8 @@ End-to-end ML pipeline for forecasting power consumption in Tetouan city, built 
 | 1a | [Baseline Config & Package](../docs/01a-baseline-config.md) | Done |
 | 1b | [Data Processing & Testing](../docs/01b-baseline-data-processing.md) | Done |
 | 1c | [Tooling & CI](../docs/01c-baseline-tooling-ci.md) | Done |
-| 1d | [Databricks Validation](../docs/01d-databricks-validation.md) | In Progress |
-| 2 | [Model Experimentation](../docs/02-model-experimentation.md) | Not Started |
+| 1d | [Databricks Validation](../docs/01d-databricks-validation.md) | Done |
+| 2 | [Model Experimentation](../docs/02-model-experimentation.md) | Done |
 | 3 | Feature Engineering | Not Started |
 | 4 | Model Serving | Not Started |
 | 5 | CI/CD Pipeline | Not Started |
@@ -76,28 +76,38 @@ uv run pytest tests/ --cov src/tetouan_power --cov-report term
 
 ```text
 tetouan-power-mlops/
-  .github/workflows/       # CI workflow (lint + test)
-  data/                    # Local dataset (gitignored)
-  notebooks/               # EDA and prototyping notebooks
-  scripts/                 # Pipeline scripts (run on Databricks)
-    01_process_data.py     # Preprocess raw CSV -> Delta tables (Phase 1d)
+  .github/workflows/           # CI workflow (lint + test)
+  data/                        # Local dataset (gitignored)
+  notebooks/                   # EDA and prototyping notebooks
+  scripts/                     # Pipeline scripts (run on Databricks)
+    01_process_data.py         # Preprocess raw CSV -> Delta tables (Phase 1d)
+    02_train_register_model.py # Train + register CustomModel (Phase 2)
   src/
-    tetouan_power/         # Python package
-      models/              # Model classes (Phase 2)
-        basic_model.py     # sklearn pipeline + native MLflow logging
-        custom_model.py    # pyfunc wrapper + code_paths packaging
-      config.py            # Pydantic config loader
-      data_processor.py    # Preprocessing + time-based splits + Delta writes
-      utils.py             # Post-processing utilities (Phase 2)
+    tetouan_power/             # Python package
+      models/                  # Model classes (Phase 2)
+        basic_model.py         # sklearn pipeline + native MLflow logging
+        custom_model.py        # pyfunc wrapper + code_paths packaging
+      config.py                # Pydantic config loader
+      data_processor.py        # Preprocessing + time-based splits + Delta writes
+      mlflow_pip_deps.py       # PySpark pip pin for logged model envs (Phase 2)
+      utils.py                 # Post-processing utilities (Phase 2)
   tests/
-    catalog/               # Train/test CSVs for model tests
-    fixtures/              # Pytest fixture modules
-    test_data/             # Small sample CSV for DataProcessor tests
-    unit_tests/            # Unit tests
-  project_config.yaml      # Feature lists, parameters, split dates, experiment names
-  pyproject.toml           # Package metadata, dependencies, tool config
-  Taskfile.yaml            # Task runner shortcuts
-  databricks.yaml          # Databricks Asset Bundle config
+    catalog/                   # Train/test CSVs for model tests (Phase 1d / 2)
+    fixtures/                  # Pytest fixture modules
+      datapreprocessor_fixture.py
+      custom_model_fixture.py  # CustomModel fixtures + .whl build (Phase 2)
+    test_data/                 # Small sample CSV for DataProcessor tests
+    unit_tests/                # Unit tests
+      test_dataprocessor.py    # DataProcessor tests (Phase 1b)
+      test_custom_model.py     # CustomModel lifecycle tests (Phase 2)
+      test_utils.py            # Post-processing tests (Phase 2)
+      test_mlflow_pip_deps.py  # PySpark pin guard (Phase 2)
+      spark_config.py          # Local Spark settings for tests
+    conftest.py                # MLflow tracking URI + pytest plugin registration
+  project_config.yaml          # Feature lists, parameters, split dates, experiment names
+  pyproject.toml               # Package metadata, dependencies, tool config
+  Taskfile.yaml                # Task runner shortcuts
+  databricks.yaml              # Databricks Asset Bundle config
 ```
 
 ## Acknowledgments
