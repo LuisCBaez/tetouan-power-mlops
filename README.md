@@ -72,6 +72,30 @@ uv run pytest tests/ --cov src/tetouan_power --cov-report term
 
 > **Switching to notebook/Databricks work?** Use `--extra dev` instead (in a fresh venv). See [Phase 1c](../docs/01c-baseline-tooling-ci.md) for details on why the extras conflict.
 
+## Development Workflow (branch -> PR -> green CI -> merge)
+
+`main` is protected by the `no-commit-to-branch` pre-commit hook. **Never commit or merge directly to `main` locally.** Every change goes through a pull request so CI runs and produces a green check before code reaches `main`.
+
+```powershell
+git checkout main
+git pull origin main
+git checkout -b feature/<name>     # use -b only when the branch is NEW
+
+# ...work, then...
+git add .
+git commit -m "..."                # pre-commit runs; passes because you are not on main
+git push -u origin feature/<name>
+```
+
+Then on GitHub: **Pull requests -> New pull request** -> base `main` <- compare `feature/<name>` -> wait for the **green CI check on the PR** -> **Merge pull request**. Finally sync local main:
+
+```powershell
+git checkout main
+git pull origin main
+```
+
+> **Do not** run `git merge feature/...` on `main` locally. That produces a `push` event on `main` (CI runs as `main`, where the `no-commit-to-branch` hook fails) and you never get the green `pull_request` check. Open a PR and let CI go green there instead.
+
 ## Project Structure
 
 ```text
