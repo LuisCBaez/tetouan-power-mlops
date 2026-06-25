@@ -23,6 +23,8 @@ class ProjectConfig(BaseModel):
     schema_name: str
     parameters: dict[str, Any]
     split: SplitConfig | None = None
+    experiment_name_basic: str | None = None
+    experiment_name_custom: str | None = None
 
     @classmethod
     def from_yaml(cls, config_path: str, env: str = "dev") -> "ProjectConfig":

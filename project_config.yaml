@@ -7,6 +7,10 @@ acc:
 dev:
   catalog_name: mlops_dev
   schema_name: tetouan_power
+
+experiment_name_basic: /Shared/tetouan-power-basic
+experiment_name_custom: /Shared/tetouan-power-custom
+
 parameters:
   learning_rate: 0.01
   n_estimators: 500

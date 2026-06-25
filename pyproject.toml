@@ -3,7 +3,7 @@ name = "tetouan-power-mlops"
 version = "0.1.0"
 description = "Tetouan power consumption forecasting - MLOps pipeline"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12,<3.14"
 authors = [
     {name = "Luis C Baez"}
 ]
@@ -14,10 +14,10 @@ dependencies = [
     "lightgbm>=4.6.0",
     "loguru>=0.7.3",
     "matplotlib>=3.10.8",
-    "mlflow>=1.27.0",
-    "numpy>=2.4.2",
-    "pandas>=3.0.1",
-    "pyarrow>=23.0.1",
+    "mlflow>=3.10.0,<4",
+    "numpy>=2.4.2,<3",
+    "pandas>=2.2.2,<3",
+    "pyarrow>=4,<24",
     "pydantic>=2.12.5",
     "pyyaml>=6.0.3",
     "scikit-learn>=1.8.0",
