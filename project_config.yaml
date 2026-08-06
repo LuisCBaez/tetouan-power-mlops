@@ -10,6 +10,7 @@ dev:
 
 experiment_name_basic: /Shared/tetouan-power-basic
 experiment_name_custom: /Shared/tetouan-power-custom
+experiment_name_fe: /Shared/tetouan-power-fe
 
 parameters:
   learning_rate: 0.01
