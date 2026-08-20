@@ -105,6 +105,8 @@ tetouan-power-mlops/
   notebooks/                   # EDA, prototyping, and interactive Databricks demos
     00_initial_eda.ipynb
     01_preprocessing_prototype.ipynb
+    01_databricks_validation_demo.py # Serverless data pipeline validation (Phase 1d)
+    02_model_experimentation_demo.py # Serverless model + MLflow validation (Phase 2)
     03_feature_engineering_demo.py # Serverless feature engineering demo (Phase 3)
   scripts/                     # Pipeline scripts (run on Databricks)
     01_process_data.py         # Preprocess raw CSV -> Delta tables (Phase 1d)
