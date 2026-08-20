@@ -6,6 +6,7 @@ client only runs inside Databricks; this module imports it lazily so it can be
 imported and partially unit-tested locally with mocks.
 """
 
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING
 
 import mlflow
@@ -176,7 +177,9 @@ class FeatureLookUpModel:
 
         mlflow.set_experiment(self.experiment_name)
 
-        with mlflow.start_run(tags=self.tags) as run:
+        run_name = f"Feature-lookup-model-{datetime.now(UTC):%Y%m%d-%H%M%S}"
+
+        with mlflow.start_run(run_name=run_name, tags=self.tags) as run:
             self.run_id = run.info.run_id
 
             pipeline.fit(self.X_train, self.y_train)

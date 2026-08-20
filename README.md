@@ -38,7 +38,7 @@ End-to-end ML pipeline for forecasting power consumption in Tetouan city, built 
 | 1c | [Tooling & CI](../docs/01c-baseline-tooling-ci.md) | Done |
 | 1d | [Databricks Validation](../docs/01d-databricks-validation.md) | Done |
 | 2 | [Model Experimentation](../docs/02-model-experimentation.md) | Done |
-| 3 | Feature Engineering | Not Started |
+| 3 | [Feature Engineering](../docs/03-feature-engineering.md) | Done |
 | 4 | Model Serving | Not Started |
 | 5 | CI/CD Pipeline | Not Started |
 | 6 | Monitoring & App | Not Started |
@@ -102,15 +102,20 @@ git pull origin main
 tetouan-power-mlops/
   .github/workflows/           # CI workflow (lint + test)
   data/                        # Local dataset (gitignored)
-  notebooks/                   # EDA and prototyping notebooks
+  notebooks/                   # EDA, prototyping, and interactive Databricks demos
+    00_initial_eda.ipynb
+    01_preprocessing_prototype.ipynb
+    03_feature_engineering_demo.py # Serverless feature engineering demo (Phase 3)
   scripts/                     # Pipeline scripts (run on Databricks)
     01_process_data.py         # Preprocess raw CSV -> Delta tables (Phase 1d)
     02_train_register_model.py # Train + register CustomModel (Phase 2)
+    03_train_register_fe_model.py # Train + register feature-aware model (Phase 3)
   src/
     tetouan_power/             # Python package
-      models/                  # Model classes (Phase 2)
+      models/                  # Model classes (Phases 2-3)
         basic_model.py         # sklearn pipeline + native MLflow logging
         custom_model.py        # pyfunc wrapper + code_paths packaging
+        feature_lookup_model.py # UC feature lookups, UDF, training, and scoring (Phase 3)
       config.py                # Pydantic config loader
       data_processor.py        # Preprocessing + time-based splits + Delta writes
       mlflow_pip_deps.py       # PySpark pip pin for logged model envs (Phase 2)
@@ -124,6 +129,7 @@ tetouan-power-mlops/
     unit_tests/                # Unit tests
       test_dataprocessor.py    # DataProcessor tests (Phase 1b)
       test_custom_model.py     # CustomModel lifecycle tests (Phase 2)
+      test_feature_lookup_model.py # Feature lookup SQL and lazy-client tests (Phase 3)
       test_utils.py            # Post-processing tests (Phase 2)
       test_mlflow_pip_deps.py  # PySpark pin guard (Phase 2)
       spark_config.py          # Local Spark settings for tests
