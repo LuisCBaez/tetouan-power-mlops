@@ -9,6 +9,11 @@
 
 # COMMAND ----------
 
+# MAGIC %pip install mlflow==3.15.0 databricks-feature-engineering==0.15.0 loguru==0.7.3
+# MAGIC %restart_python
+
+# COMMAND ----------
+
 import sys
 from pathlib import Path
 
@@ -17,7 +22,7 @@ sys.path.append(str(Path.cwd().parent / "src"))
 
 import mlflow
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col
+from pyspark.sql.functions import col, concat, lit
 
 from tetouan_power.config import ProjectConfig, Tags
 from tetouan_power.models.feature_lookup_model import FeatureLookUpModel
@@ -70,5 +75,5 @@ predictions.select("id", "prediction").show()
 # 6) Gotcha: score a row whose key does NOT exist in the feature table.
 # The lookup finds no weather -> nulls -> the model errors or returns null.
 # This is why Phase 4 adds an online store + default handling.
-X_missing = X_score.withColumn("id", col("id").cast("string")).withColumn("id", col("id") + "_missing")
+X_missing = X_score.withColumn("id", concat(col("id").cast("string"), lit("_missing")))
 fe_model.load_latest_model_and_predict(X_missing).select("id", "prediction").show()

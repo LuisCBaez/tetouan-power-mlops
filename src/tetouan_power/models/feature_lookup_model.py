@@ -205,6 +205,11 @@ class FeatureLookUpModel:
                 artifact_path="lightgbm-pipeline-model-fe",
                 training_set=self.training_set,
                 signature=signature,
+                skops_trusted_types=[
+                    "collections.OrderedDict",
+                    "lightgbm.basic.Booster",
+                    "lightgbm.sklearn.LGBMRegressor",
+                ],
             )
         logger.info("Model logged with feature metadata.")
 
