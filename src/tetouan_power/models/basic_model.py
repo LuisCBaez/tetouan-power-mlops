@@ -1,5 +1,7 @@
 """BasicModel: sklearn pipeline with native MLflow logging."""
 
+from datetime import UTC, datetime
+
 import mlflow
 import numpy as np
 from lightgbm import LGBMRegressor
@@ -62,7 +64,8 @@ class BasicModel:
     def log_model(self) -> None:
         """Log the trained model, metrics, and dataset lineage to MLflow."""
         mlflow.set_experiment(self.experiment_name)
-        with mlflow.start_run(tags=self.tags) as run:
+        run_name = f"Basic-model-{datetime.now(UTC):%Y%m%d-%H%M%S}"
+        with mlflow.start_run(run_name=run_name, tags=self.tags) as run:
             self.run_id = run.info.run_id
 
             y_pred = self.pipeline.predict(self.X_test)

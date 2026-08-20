@@ -1,5 +1,6 @@
 """CustomModel: pyfunc wrapper with post-processing and code_paths packaging."""
 
+from datetime import UTC, datetime
 from typing import Literal
 
 import mlflow
@@ -109,12 +110,14 @@ class CustomModel:
         """
         mlflow.set_experiment(self.experiment_name)
 
+        run_name = f"Custom-model-{datetime.now(UTC):%Y%m%d-%H%M%S}"
+
         additional_pip_deps = [pyspark_pip_requirement()]
         for package in self.code_paths:
             whl_name = package.split("/")[-1]
             additional_pip_deps.append(f"./code/{whl_name}")
 
-        with mlflow.start_run(tags=self.tags) as run:
+        with mlflow.start_run(run_name=run_name, tags=self.tags) as run:
             self.run_id = run.info.run_id
 
             y_pred = self.pipeline.predict(self.X_test)
