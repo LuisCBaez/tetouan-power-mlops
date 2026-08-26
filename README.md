@@ -20,7 +20,7 @@ End-to-end ML pipeline for forecasting power consumption in Tetouan city, built 
 | Language | Python 3.12 | Core language |
 | Package manager | [uv](https://docs.astral.sh/uv/) | Fast dependency management and venv creation |
 | ML framework | LightGBM + scikit-learn | Gradient boosting model + pipeline |
-| Experiment tracking | MLflow 3.x | Metrics, parameters, model artifacts, dataset lineage (Unity Catalog registry) |
+| Experiment tracking | MLflow 3.15.0 | Metrics, parameters, model artifacts, dataset lineage (Unity Catalog registry) |
 | Data platform | Databricks (Unity Catalog) | Delta tables, model registry, serving |
 | Cloud | AWS (S3, IAM) | Storage, authentication |
 | CI/CD | GitHub Actions | Linting, testing, deployment |
@@ -45,7 +45,7 @@ End-to-end ML pipeline for forecasting power consumption in Tetouan city, built 
 
 ## Dependencies note
 
-MLflow **3.10.x** on PyPI currently requires **pandas 2.x** and **`pyarrow<24`**; `pyproject.toml` is pinned accordingly so `uv lock` stays consistent. When MLflow relaxes those caps, bump versions there and re-lock.
+This project pins **MLflow 3.15.0** across local and Databricks environments. The explicit `pandas<3` and `pyarrow<24` constraints remain in `pyproject.toml` so local dependency resolution stays reproducible.
 
 Logged model environments derive **`pyspark==...`** from the installed `pyspark` package (`tetouan_power.mlflow_pip_deps`) so the pin tracks `pyproject.toml` / cluster runtime instead of a stale hard-coded string.
 
