@@ -1,6 +1,6 @@
-# Tetouan Power Consumption -- MLOps Pipeline
+# Tetouan Power MLOps
 
-End-to-end ML pipeline for forecasting power consumption in Tetouan city, built incrementally from raw data to production using MLOps best practices on AWS + Databricks.
+End-to-end Databricks MLOps project using Tetouan power-demand regression as the practical machine learning use case. The repository demonstrates tested data processing, experiment tracking, model packaging and registration, and feature engineering across local, AWS, and Databricks environments.
 
 ## Dataset
 
@@ -8,10 +8,10 @@ End-to-end ML pipeline for forecasting power consumption in Tetouan city, built 
 |-----------|-------|
 | Source | [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/849/power+consumption+of+tetouan+city) |
 | Records | ~52,416 (10-minute intervals, Jan--Dec 2017) |
-| Target | Zone 1 Power Consumption (kW) |
+| Target | `zone1_consumption` (raw: Zone 1 Power Consumption) |
 | Features | Temperature, Humidity, Wind Speed, general diffuse flows, diffuse flows |
 | Temporal features | hour, day_of_week, month, is_weekend (engineered from DateTime) |
-| Task | Regression (forecasting) |
+| Task | Same-timestamp power-demand regression |
 
 ## Tech Stack
 
@@ -30,18 +30,17 @@ End-to-end ML pipeline for forecasting power consumption in Tetouan city, built 
 
 ## Project Phases
 
-| Phase | Guide | Status |
+| Phase | Public documentation | Status |
 |-------|-------|--------|
-| 0 | [Project Foundation](../docs/00-project-foundation.md) | Done |
-| 1a | [Baseline Config & Package](../docs/01a-baseline-config.md) | Done |
-| 1b | [Data Processing & Testing](../docs/01b-baseline-data-processing.md) | Done |
-| 1c | [Tooling & CI](../docs/01c-baseline-tooling-ci.md) | Done |
-| 1d | [Databricks Validation](../docs/01d-databricks-validation.md) | Done |
-| 2 | [Model Experimentation](../docs/02-model-experimentation.md) | Done |
-| 3 | [Feature Engineering](../docs/03-feature-engineering.md) | Done |
-| 4 | Model Serving | Not Started |
-| 5 | CI/CD Pipeline | Not Started |
-| 6 | Monitoring & App | Not Started |
+| 0 | [Problem statement](docs/00-problem-statement.md) and [EDA findings](docs/01-eda-findings.md) | Complete |
+| 1 | [Databricks validation notebook](notebooks/01_databricks_validation_demo.py) | Complete |
+| 2 | [Model experimentation notebook](notebooks/02_model_experimentation_demo.py) | Complete |
+| 3 | [Feature engineering notebook](notebooks/03_feature_engineering_demo.py) | Complete |
+| 4+ | Model serving and later production work | Not started |
+
+See the [public documentation index](docs/README.md) for the implemented project path.
+
+The source data is observed every ten minutes, but the target is not shifted into the future. The current models estimate Zone 1 demand for the same timestamp represented by the weather and calendar inputs. A true future-horizon forecast is outside the current modeling scope.
 
 ## Dependencies note
 
@@ -70,7 +69,7 @@ uv run pre-commit run --all-files
 uv run pytest tests/ --cov src/tetouan_power --cov-report term
 ```
 
-> **Switching to notebook/Databricks work?** Use `--extra dev` instead (in a fresh venv). See [Phase 1c](../docs/01c-baseline-tooling-ci.md) for details on why the extras conflict.
+> **Switching to notebook/Databricks work?** Use `--extra dev` instead in a fresh virtual environment. The `dev` extra uses Databricks Connect, while the `test` extra uses local PySpark; do not install both extras in the same environment.
 
 ## Development Workflow (branch -> PR -> green CI -> merge)
 
@@ -102,6 +101,10 @@ git pull origin main
 tetouan-power-mlops/
   .github/workflows/           # CI workflow (lint + test)
   data/                        # Local dataset (gitignored)
+  docs/                        # Public problem statement, EDA findings, and documentation index
+    README.md
+    00-problem-statement.md
+    01-eda-findings.md
   notebooks/                   # EDA, prototyping, and interactive Databricks demos
     00_initial_eda.ipynb
     01_preprocessing_prototype.ipynb

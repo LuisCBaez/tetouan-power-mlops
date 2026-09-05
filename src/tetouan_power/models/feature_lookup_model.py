@@ -1,4 +1,4 @@
-"""FeatureLookUpModel: Databricks Feature Engineering for Tetouan power forecasting.
+"""Databricks Feature Engineering model for Tetouan power-demand regression.
 
 Builds a training set from a Unity Catalog feature table (weather, looked up by
 timestamp) and an on-demand feature function (is_weekend). The Feature Engineering
