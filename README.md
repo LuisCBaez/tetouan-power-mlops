@@ -73,7 +73,7 @@ uv run pytest tests/ --cov src/tetouan_power --cov-report term
 
 ## Development Workflow (branch -> PR -> green CI -> merge)
 
-`main` is protected by the `no-commit-to-branch` pre-commit hook. **Never commit or merge directly to `main` locally.** Every change goes through a pull request so CI runs and produces a green check before code reaches `main`.
+Local commits on `main` are blocked by the `no-commit-to-branch` pre-commit hook. **Never commit or merge directly to `main` locally.** Every change goes through a pull request so CI validates it before merge and validates the resulting `main` commit again afterward.
 
 ```powershell
 git checkout main
@@ -93,7 +93,7 @@ git checkout main
 git pull origin main
 ```
 
-> **Do not** run `git merge feature/...` on `main` locally. That produces a `push` event on `main` (CI runs as `main`, where the `no-commit-to-branch` hook fails) and you never get the green `pull_request` check. Open a PR and let CI go green there instead.
+> **Why CI skips one pre-commit hook:** `no-commit-to-branch` is a local workflow guard, not a code-quality check. CI is inspecting commits that already exist, so its pre-commit step sets `SKIP: no-commit-to-branch` while continuing to run every lint, formatting, safety, and notebook-output check. Keep using pull requests for review and pre-merge validation; after a merge, the `push` workflow validates the exact commit now on `main`.
 
 ## Project Structure
 
