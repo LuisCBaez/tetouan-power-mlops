@@ -8,10 +8,9 @@ from unittest.mock import MagicMock
 
 import pandas as pd
 import pytest
-from loguru import logger
 from pyspark.sql import SparkSession
 
-from tests.conftest import CATALOG_DIR, MLRUNS_DIR
+from tests.conftest import CATALOG_DIR
 from tetouan_power import PROJECT_DIR
 from tetouan_power.config import ProjectConfig, Tags
 from tetouan_power.models.custom_model import CustomModel
@@ -23,15 +22,6 @@ whl_file_name = None
 def tags() -> Tags:
     """Provide a Tags instance for all tests in the session."""
     return Tags(git_sha="test123", branch="test", job_run_id="0")
-
-
-@pytest.fixture(scope="session", autouse=True)
-def create_mlruns_directory() -> None:
-    """Clean and recreate the local MLflow tracking directory."""
-    if MLRUNS_DIR.exists():
-        shutil.rmtree(MLRUNS_DIR)
-    MLRUNS_DIR.mkdir(parents=True, exist_ok=True)
-    logger.info(f"Created {MLRUNS_DIR} for MLflow tracking")
 
 
 @pytest.fixture(scope="session", autouse=True)

@@ -8,11 +8,17 @@ from pyspark.sql import SparkSession
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-from tests.conftest import CATALOG_DIR, TRACKING_URI
+from tests.conftest import CATALOG_DIR
 from tetouan_power.config import ProjectConfig, Tags
 from tetouan_power.models.custom_model import CustomModel
 
-mlflow.set_tracking_uri(TRACKING_URI)
+
+def test_mlflow_uses_temporary_sqlite_backend() -> None:
+    """Verify tracking and registry use the same SQLite backend."""
+    tracking_uri = mlflow.get_tracking_uri()
+
+    assert tracking_uri.startswith("sqlite:///")
+    assert mlflow.get_registry_uri() == tracking_uri
 
 
 def test_custom_model_init(config: ProjectConfig, tags: Tags, spark_session: SparkSession) -> None:

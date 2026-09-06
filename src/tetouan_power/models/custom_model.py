@@ -34,7 +34,7 @@ class PowerConsumptionModelWrapper(mlflow.pyfunc.PythonModel):
         """Store the trained pipeline."""
         self.model = model
 
-    def predict(self, context: mlflow.pyfunc.PythonModelContext, model_input: pd.DataFrame | np.ndarray) -> np.ndarray:
+    def predict(self, context: mlflow.pyfunc.PythonModelContext, model_input) -> np.ndarray:
         """Run prediction with post-processing.
 
         Args:

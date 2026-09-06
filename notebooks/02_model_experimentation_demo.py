@@ -8,7 +8,7 @@
 
 # COMMAND ----------
 
-# MAGIC %pip install mlflow==3.10.1 lightgbm==4.6.0 loguru==0.7.3 scikit-learn==1.8.0
+# MAGIC %pip install mlflow==3.15.0 lightgbm==4.6.0 loguru==0.7.3 scikit-learn==1.8.0
 # MAGIC %restart_python
 
 # COMMAND ----------

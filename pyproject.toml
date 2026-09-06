@@ -1,7 +1,7 @@
 [project]
 name = "tetouan-power-mlops"
 version = "0.1.0"
-description = "Tetouan power consumption forecasting - MLOps pipeline"
+description = "End-to-end Databricks MLOps project for Tetouan power-demand regression"
 readme = "README.md"
 requires-python = ">=3.12,<3.14"
 authors = [
@@ -14,7 +14,7 @@ dependencies = [
     "lightgbm>=4.6.0",
     "loguru>=0.7.3",
     "matplotlib>=3.10.8",
-    "mlflow>=3.10.0,<4",
+    "mlflow==3.15.0",
     "numpy>=2.4.2,<3",
     "pandas>=2.2.2,<3",
     "pyarrow>=4,<24",
